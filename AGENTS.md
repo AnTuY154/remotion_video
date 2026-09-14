@@ -43,3 +43,17 @@ From `packages/example`:
 - `bunx remotion compositions` — list available compositions.
 - `bunx remotion render <comp-id> --output ../../out/video.mp4` — render a video.
 - `bunx remotion still <comp-id> --output ../../out/still.png` — render a still image.
+
+## Project-specific video direction
+
+Before building story videos, reusable characters, choreography, or dialogue systems, read `PROJECT_CONTEXT.md`.
+
+Project-specific Agent Skills are available in `.agents/skills`:
+
+- `character-animation-system`
+- `scene-choreography`
+- `script-to-scenes`
+- `character-dialogue-lipsync`
+
+These project-specific skills intentionally live outside `packages/skills` so they do not modify the upstream Remotion skill package or its synchronization rules.
+
