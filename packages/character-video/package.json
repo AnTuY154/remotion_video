@@ -7,13 +7,17 @@
     "assets": "bun scripts/materialize-assets.ts",
     "dev": "bun run assets && remotion studio src/index.ts",
     "render:doi": "bun run assets && remotion render src/index.ts DoiYarnDemo renders/doi-yarn-demo.mp4 --codec=h264 --overwrite",
-    "lint": "eslint src && tsc --noEmit"
+    "lint": "eslint src && tsc --noEmit",
+    "render:doi3d": "remotion render src/index.ts Doi3DProof renders/doi-3d-proof.mp4 --codec=h264 --overwrite"
   },
   "dependencies": {
     "@remotion/cli": "workspace:*",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "remotion": "workspace:*"
+    "remotion": "workspace:*",
+    "@react-three/fiber": "catalog:",
+    "@remotion/three": "workspace:*",
+    "three": "catalog:"
   },
   "devDependencies": {
     "@remotion/eslint-config-flat": "workspace:*",
