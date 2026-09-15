@@ -1,0 +1,24 @@
+{
+  "name": "@remotion/character-video",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Script-driven character video prototypes for the Đời mascot",
+  "scripts": {
+    "dev": "remotion studio src/index.ts",
+    "render:doi": "remotion render src/index.ts DoiYarnDemo renders/doi-yarn-demo.mp4 --codec=h264 --overwrite",
+    "lint": "eslint src && tsc --noEmit"
+  },
+  "dependencies": {
+    "@remotion/cli": "workspace:*",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "remotion": "workspace:*"
+  },
+  "devDependencies": {
+    "@remotion/eslint-config-flat": "workspace:*",
+    "@types/react": "catalog:",
+    "@types/web": "catalog:",
+    "eslint": "catalog:",
+    "typescript": "catalog:"
+  }
+}
