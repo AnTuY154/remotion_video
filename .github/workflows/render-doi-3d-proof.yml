@@ -1,0 +1,94 @@
+name: Render Đời 3D proof
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "packages/character-video/src/three/**"
+      - "packages/character-video/src/scenes/Doi3DProof.tsx"
+      - "packages/character-video/src/Root.tsx"
+      - "packages/character-video/package.json"
+      - "packages/character-video/style-canon/**"
+      - "packages/character-video/assets/**"
+      - ".github/workflows/render-doi-3d-proof.yml"
+      - "!packages/character-video/renders/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-doi-3d-proof
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.3"
+
+      - name: Prepare standalone Remotion Three runner
+        run: |
+          rm -rf .render-runner
+          mkdir -p .render-runner
+          cp -R packages/character-video/src .render-runner/src
+          cat > .render-runner/package.json <<'JSON'
+          {
+            "private": true,
+            "dependencies": {
+              "@react-three/fiber": "9.2.0",
+              "@remotion/cli": "4.0.524",
+              "@remotion/three": "4.0.524",
+              "react": "19.2.3",
+              "react-dom": "19.2.3",
+              "remotion": "4.0.524",
+              "three": "0.178.0"
+            }
+          }
+          JSON
+          cd .render-runner
+          bun install
+
+      - name: Render architecture proof
+        run: |
+          mkdir -p packages/character-video/renders/doi-3d-proof-frames
+          cd .render-runner
+          bunx remotion render src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof.mp4 --codec=h264 --overwrite --concurrency=2
+          bunx remotion still src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof-frames/frame-030.png --frame=30 --overwrite
+          bunx remotion still src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof-frames/frame-105.png --frame=105 --overwrite
+          bunx remotion still src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof-frames/frame-158.png --frame=158 --overwrite
+          bunx remotion still src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof-frames/frame-220.png --frame=220 --overwrite
+
+      - name: Probe MP4
+        run: |
+          ffprobe -v error             -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt             -show_entries format=duration,size             -of json             packages/character-video/renders/doi-3d-proof.mp4
+
+      - name: Upload proof artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: doi-3d-proof
+          path: |
+            packages/character-video/renders/doi-3d-proof.mp4
+            packages/character-video/renders/doi-3d-proof-frames/*.png
+          if-no-files-found: error
+
+      - name: Commit proof render
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/character-video/renders/doi-3d-proof.mp4
+          git add packages/character-video/renders/doi-3d-proof-frames
+          if git diff --cached --quiet; then
+            echo "Proof render unchanged."
+          else
+            git commit -m "chore(video): render Đời 3D architecture proof"
+            git push
+          fi
