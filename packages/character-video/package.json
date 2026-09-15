@@ -19,6 +19,6 @@
     "@types/react": "catalog:",
     "@types/web": "catalog:",
     "eslint": "catalog:",
-    "typescript": "catalog:"
+    "typescript": "5.9.3"
   }
 }
