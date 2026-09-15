@@ -4,8 +4,9 @@
   "private": true,
   "description": "Script-driven character video prototypes for the Đời mascot",
   "scripts": {
-    "dev": "remotion studio src/index.ts",
-    "render:doi": "remotion render src/index.ts DoiYarnDemo renders/doi-yarn-demo.mp4 --codec=h264 --overwrite",
+    "assets": "bun scripts/materialize-assets.ts",
+    "dev": "bun run assets && remotion studio src/index.ts",
+    "render:doi": "bun run assets && remotion render src/index.ts DoiYarnDemo renders/doi-yarn-demo.mp4 --codec=h264 --overwrite",
     "lint": "eslint src && tsc --noEmit"
   },
   "dependencies": {
