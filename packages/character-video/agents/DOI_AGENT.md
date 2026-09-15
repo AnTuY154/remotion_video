@@ -89,28 +89,20 @@ Future actions:
 - **7–9s:** anticipation + small playful pounce
 - **9–10s:** settles beside yarn and finishes with a cute blink
 
-## Render strategy for current prototype
+## Production render strategy
 
-This first demo uses a deterministic vector puppet inspired by the reference image. This intentionally avoids relying on binary image assets so the demo can render reliably in CI.
+The approved direction is cinematic 3D.
 
-For production-quality future videos, migrate Đời to a segmented puppet or Rive rig while preserving this identity file.
+Read `style-canon/DOI_STYLE_CANON.md` and `assets/MODEL_REQUIREMENTS.md`.
 
-## V2 canonical render asset
+Preferred production renderer:
 
-The canonical V2 image-based render asset is materialized to:
+- GLB / GLTF skeletal actor
+- `@remotion/three`
+- deterministic frame sampling
+- reusable semantic animation clips
 
-`public/assets/doi-v2.webp`
+The existing WebP/CSS cutout pipeline is legacy only. It may be used to reproduce old demos, but it must not be treated as the master asset or extended into new production actions.
 
-Its source is stored in deterministic base64 chunks under:
-
-`assets-src/doi-v2.webp.b64.*`
-
-Do not replace Đời with a generic vector cat. The image-based asset must remain the likeness source of truth until a higher-quality Rive/segmented rig is explicitly approved.
-
-### V2 motion architecture
-
-- `src/components/doi-motion.ts` is the shared deterministic motion model.
-- `src/components/DoiPuppet.tsx` uses masked duplicates of the same canonical image for head, tail, paw, and body layers.
-- Action overlap, anticipation, follow-through, breathing, weight shift, tail lag, and pounce settling are intentional.
-- Yarn contact timing must stay synchronized with the paw via the shared motion model.
+`Doi3DProof` is an architecture test that validates Three.js/Remotion rendering with a primitive proxy. The proxy is not a likeness reference and must be replaced by an approved production GLB before release-quality story videos.
 
