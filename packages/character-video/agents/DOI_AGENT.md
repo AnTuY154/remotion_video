@@ -94,3 +94,23 @@ Future actions:
 This first demo uses a deterministic vector puppet inspired by the reference image. This intentionally avoids relying on binary image assets so the demo can render reliably in CI.
 
 For production-quality future videos, migrate Đời to a segmented puppet or Rive rig while preserving this identity file.
+
+## V2 canonical render asset
+
+The canonical V2 image-based render asset is materialized to:
+
+`public/assets/doi-v2.webp`
+
+Its source is stored in deterministic base64 chunks under:
+
+`assets-src/doi-v2.webp.b64.*`
+
+Do not replace Đời with a generic vector cat. The image-based asset must remain the likeness source of truth until a higher-quality Rive/segmented rig is explicitly approved.
+
+### V2 motion architecture
+
+- `src/components/doi-motion.ts` is the shared deterministic motion model.
+- `src/components/DoiPuppet.tsx` uses masked duplicates of the same canonical image for head, tail, paw, and body layers.
+- Action overlap, anticipation, follow-through, breathing, weight shift, tail lag, and pounce settling are intentional.
+- Yarn contact timing must stay synchronized with the paw via the shared motion model.
+
