@@ -258,6 +258,26 @@
         "eslint": "catalog:",
       },
     },
+    "packages/character-video": {
+      "name": "@remotion/character-video",
+      "version": "1.0.0",
+      "dependencies": {
+        "@react-three/fiber": "catalog:",
+        "@remotion/cli": "workspace:*",
+        "@remotion/three": "workspace:*",
+        "react": "catalog:",
+        "react-dom": "catalog:",
+        "remotion": "workspace:*",
+        "three": "catalog:",
+      },
+      "devDependencies": {
+        "@remotion/eslint-config-flat": "workspace:*",
+        "@types/react": "catalog:",
+        "@types/web": "catalog:",
+        "eslint": "catalog:",
+        "typescript": "5.9.3",
+      },
+    },
     "packages/claude-code-plugin": {
       "name": "@remotion/claude-code-plugin",
       "version": "4.0.524",
@@ -4541,6 +4561,8 @@
     "@remotion/canvas-capture-extension": ["@remotion/canvas-capture-extension@workspace:packages/canvas-capture-extension"],
 
     "@remotion/captions": ["@remotion/captions@workspace:packages/captions"],
+
+    "@remotion/character-video": ["@remotion/character-video@workspace:packages/character-video"],
 
     "@remotion/claude-code-plugin": ["@remotion/claude-code-plugin@workspace:packages/claude-code-plugin"],
 
@@ -10677,6 +10699,10 @@
     "@remotion/canvas-capture-extension/react": ["react@19.2.3", "", {}, "sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA=="],
 
     "@remotion/canvas-capture-extension/react-dom": ["react-dom@19.2.3", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.3" } }, "sha512-yELu4WmLPw5Mr/lmeEpox5rw3RETacE++JgHqQzd2dg+YbJuat3jH4ingc+WPZhxaoFzdv9y33G+F7Nl5O0GBg=="],
+
+    "@remotion/character-video/react": ["react@19.2.3", "", {}, "sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA=="],
+
+    "@remotion/character-video/react-dom": ["react-dom@19.2.3", "", { "dependencies": { "scheduler": "^0.27.0" }, "peerDependencies": { "react": "^19.2.3" } }, "sha512-yELu4WmLPw5Mr/lmeEpox5rw3RETacE++JgHqQzd2dg+YbJuat3jH4ingc+WPZhxaoFzdv9y33G+F7Nl5O0GBg=="],
 
     "@remotion/cli/react": ["react@19.2.3", "", {}, "sha512-Ku/hhYbVjOQnXDZFv2+RibmLFGwFdeeKHFcOTlrt7xplBnya5OGn/hIRDsqDiSUcfORsDC7MPxwork8jBwsIWA=="],
 
