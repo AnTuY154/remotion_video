@@ -7,6 +7,7 @@ on:
     paths:
       - "packages/character-video/**"
       - "!packages/character-video/renders/**"
+      - "!packages/character-video/public/assets/doi-v2.webp"
       - ".github/workflows/render-doi-demo.yml"
 
 permissions:
@@ -30,11 +31,18 @@ jobs:
         with:
           bun-version: "1.3.3"
 
+      - name: Materialize Đời V2 asset
+        run: |
+          bun packages/character-video/scripts/materialize-assets.ts
+          test -s packages/character-video/public/assets/doi-v2.webp
+          file packages/character-video/public/assets/doi-v2.webp
+
       - name: Prepare standalone Remotion runner
         run: |
           rm -rf .render-runner
           mkdir -p .render-runner
           cp -R packages/character-video/src .render-runner/src
+          cp -R packages/character-video/public .render-runner/public
           cat > .render-runner/package.json <<'JSON'
           {
             "private": true,
@@ -58,18 +66,19 @@ jobs:
       - name: Upload downloadable artifact
         uses: actions/upload-artifact@v4
         with:
-          name: doi-yarn-demo
+          name: doi-yarn-demo-v2
           path: packages/character-video/renders/doi-yarn-demo.mp4
           if-no-files-found: error
 
-      - name: Commit rendered MP4
+      - name: Commit materialized asset and rendered MP4
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add packages/character-video/public/assets/doi-v2.webp
           git add packages/character-video/renders/doi-yarn-demo.mp4
           if git diff --cached --quiet; then
-            echo "Render unchanged; nothing to commit."
+            echo "No generated files changed."
           else
-            git commit -m "chore(video): render Đời yarn demo"
+            git commit -m "chore(video): render Đời V2 yarn demo"
             git push
           fi
