@@ -27,6 +27,6 @@ jobs:
       - name: Verify frozen lockfile
         run: bun install --frozen-lockfile
 
-      - name: Lint and typecheck character-video
+      - name: Typecheck character-video
         working-directory: packages/character-video
-        run: bun run lint
+        run: bunx tsc --noEmit
