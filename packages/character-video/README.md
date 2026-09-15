@@ -1,33 +1,41 @@
 # Đời Character Video
 
-This package contains the first reusable video prototype for **Đời**, the main mascot character.
+This package is the product-specific character-video sandbox inside the Remotion monorepo.
 
-## Demo
+## Current production direction
 
-Composition: `DoiYarnDemo`
+The approved cinematic 3D look is now the primary direction.
 
-- duration: 10 seconds
-- fps: 30
-- resolution: 1280×720
-- scene: Đời plays with a ball of yarn in a bright seaside bedroom/studio
+Read before changing Đời:
 
-## Preview
+- `style-canon/DOI_STYLE_CANON.md`
+- `docs/ASSET_AUDIT_2026-09-15.md`
+- `assets/MODEL_REQUIREMENTS.md`
+- `agents/DOI_AGENT.md`
+
+## Compositions
+
+### `Doi3DProof`
+
+Architecture proof for:
+
+- `@remotion/three`
+- deterministic 3D animation
+- reusable semantic motion channels
+- lighting / shadows / camera
+- prop interaction
+
+The current actor is intentionally a primitive proxy and is **not** the final likeness asset.
+
+Render:
 
 ```bash
 cd packages/character-video
-bunx remotion studio src/index.ts
+bun run render:doi3d
 ```
 
-## Render
+### `DoiYarnDemo` — legacy
 
-```bash
-cd packages/character-video
-mkdir -p renders
-bunx remotion render src/index.ts DoiYarnDemo renders/doi-yarn-demo.mp4 --codec=h264 --overwrite
-```
+The earlier raster cutout prototype is kept only for comparison and reproducibility.
 
-A GitHub Actions workflow renders the MP4 and commits it to:
-
-`packages/character-video/renders/doi-yarn-demo.mp4`
-
-Read `agents/DOI_AGENT.md` before changing Đời's identity.
+Do not use its WebP/CSS clip-path strategy as the base for new production shots.
