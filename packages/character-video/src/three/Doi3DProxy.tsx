@@ -29,7 +29,7 @@ const Ellipsoid:React.FC<{
 const Eye:React.FC<{x:number;blink:number}>=({x,blink})=>{
   const visibleScale=Math.max(0.08,1-blink*0.92);
   return (
-    <group position={[x,2.28,1.18]} scale={[1,visibleScale,1]}>
+    <group position={[x,0.12,0.72]} scale={[1,visibleScale,1]}>
       <mesh scale={[0.17,0.22,0.085]}>
         <sphereGeometry args={[1,32,24]}/>
         <meshStandardMaterial color={amber} roughness={0.28} metalness={0.05}/>
@@ -47,7 +47,7 @@ const Eye:React.FC<{x:number;blink:number}>=({x,blink})=>{
 };
 
 const Ear:React.FC<{x:number;side:-1|1}>=({x,side})=>(
-  <group position={[x,2.82,0.57]} rotation={[0,0,side*0.17]}>
+  <group position={[x,0.62,0.03]} rotation={[0,0,side*0.17]}>
     <mesh scale={[0.36,0.58,0.28]} castShadow>
       <coneGeometry args={[0.55,1,3,1]}/>
       <meshStandardMaterial color={fur} roughness={0.8}/>
