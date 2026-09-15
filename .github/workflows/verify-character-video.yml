@@ -27,6 +27,47 @@ jobs:
       - name: Verify frozen lockfile
         run: bun install --frozen-lockfile
 
-      - name: Typecheck character-video
-        working-directory: packages/character-video
+      - name: Prepare standalone typecheck runner
+        run: |
+          rm -rf .verify-runner
+          mkdir -p .verify-runner
+          cp -R packages/character-video/src .verify-runner/src
+          cat > .verify-runner/package.json <<'JSON'
+          {
+            "private": true,
+            "dependencies": {
+              "@react-three/fiber": "9.2.0",
+              "@remotion/three": "4.0.524",
+              "@types/react": "19.2.7",
+              "@types/react-dom": "19.2.3",
+              "@types/three": "0.170.0",
+              "react": "19.2.3",
+              "react-dom": "19.2.3",
+              "remotion": "4.0.524",
+              "three": "0.178.0",
+              "typescript": "5.9.3"
+            }
+          }
+          JSON
+          cat > .verify-runner/tsconfig.json <<'JSON'
+          {
+            "compilerOptions": {
+              "target": "ES2022",
+              "module": "ESNext",
+              "moduleResolution": "Bundler",
+              "jsx": "react-jsx",
+              "strict": true,
+              "skipLibCheck": true,
+              "esModuleInterop": true,
+              "allowSyntheticDefaultImports": true,
+              "noEmit": true
+            },
+            "include": ["src/**/*.ts", "src/**/*.tsx"]
+          }
+          JSON
+          cd .verify-runner
+          bun install
+
+      - name: Typecheck character-video source
+        working-directory: .verify-runner
         run: bunx tsc --noEmit
