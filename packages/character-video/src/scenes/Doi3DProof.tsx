@@ -2,8 +2,20 @@ import React from "react";
 import {AbsoluteFill,useCurrentFrame,useVideoConfig} from "remotion";
 import {ThreeCanvas} from "@remotion/three";
 import {PCFSoftShadowMap,SRGBColorSpace} from "three";
+import {useThree} from "@react-three/fiber";
+import {useLayoutEffect} from "react";
 import {Doi3DProxy} from "../three/Doi3DProxy";
 import {getDoi3DMotion} from "../three/doi3d-motion";
+
+const CameraRig:React.FC=()=>{
+  const {camera}=useThree();
+  useLayoutEffect(()=>{
+    camera.position.set(0,2.55,8.8);
+    camera.lookAt(0,1.45,0.1);
+    camera.updateProjectionMatrix();
+  },[camera]);
+  return null;
+};
 
 const Room:React.FC=()=>(
   <group>
@@ -95,7 +107,7 @@ export const Doi3DProof:React.FC=()=>{
         height={720}
         shadows
         dpr={1}
-        camera={{position:[0,2.75,8.4],fov:34}}
+        camera={{position:[0,2.55,8.8],fov:34}}
         gl={{antialias:true,preserveDrawingBuffer:true}}
         onCreated={({gl})=>{
           gl.shadowMap.enabled=true;
@@ -103,6 +115,7 @@ export const Doi3DProof:React.FC=()=>{
           gl.outputColorSpace=SRGBColorSpace;
         }}
       >
+        <CameraRig/>
         <color attach="background" args={["#dcebf5"]}/>
         <fog attach="fog" args={["#dcebf5",10,19]}/>
 
