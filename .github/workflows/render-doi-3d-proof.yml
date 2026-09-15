@@ -67,9 +67,15 @@ jobs:
           bunx remotion still src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof-frames/frame-158.png --frame=158 --overwrite
           bunx remotion still src/index.ts Doi3DProof ../packages/character-video/renders/doi-3d-proof-frames/frame-220.png --frame=220 --overwrite
 
-      - name: Probe MP4
+      - name: Validate outputs
         run: |
-          ffprobe -v error             -show_entries stream=codec_name,width,height,r_frame_rate,pix_fmt             -show_entries format=duration,size             -of json             packages/character-video/renders/doi-3d-proof.mp4
+          test -s packages/character-video/renders/doi-3d-proof.mp4
+          test -s packages/character-video/renders/doi-3d-proof-frames/frame-030.png
+          test -s packages/character-video/renders/doi-3d-proof-frames/frame-105.png
+          test -s packages/character-video/renders/doi-3d-proof-frames/frame-158.png
+          test -s packages/character-video/renders/doi-3d-proof-frames/frame-220.png
+          file packages/character-video/renders/doi-3d-proof.mp4
+          ls -lh packages/character-video/renders/doi-3d-proof.mp4
 
       - name: Upload proof artifact
         uses: actions/upload-artifact@v4
